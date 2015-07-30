@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{145263FB-A9BC-4B36-AAF3-D754C7C74CFC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ninject.Extensions.UnitOfWork</RootNamespace>
+    <AssemblyName>Ninject.Extensions.UnitOfWork</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWorkScope.cs" />
+    <Compile Include="UnitOfWorkExtensionMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition="Exists('..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets'))" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <ItemGroup>
+      <AssemblyInfoFiles Include="$(ProjectDir)Properties\AssemblyInfo.cs" />
+    </ItemGroup>
+    <MSBuild.ExtensionPack.Framework.AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyRevisionType="AutoIncrement" PaddingCount="2" />
+  </Target>
+  <Target Name="AfterBuild">
+    <MSBuild.ExtensionPack.Framework.Assembly TaskAction="GetInfo" NetAssembly="$(TargetPath)">
+      <Output TaskParameter="OutputItems" ItemName="AssemblyInfo" />
+    </MSBuild.ExtensionPack.Framework.Assembly>
+    <PropertyGroup>
+      <VersionPattern>(\d+)\.(\d+)\.(\d+)</VersionPattern>
+      <RevisionVersionPattern>(?&lt;=(\d+)\.(\d+)\.(\d+)\.)(\d+)</RevisionVersionPattern>
+      <VersionNumber>$([System.Text.RegularExpressions.Regex]::Match(%(AssemblyInfo.AssemblyVersion), $(VersionPattern)))</VersionNumber>
+      <RevisionNumber>$([System.Text.RegularExpressions.Regex]::Match(%(AssemblyInfo.AssemblyVersion), $(RevisionVersionPattern)))</RevisionNumber>
+    </PropertyGroup>
+    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+      <TargetVersionNumber Include="$(VersionNumber)" />
+    </ItemGroup>
+    <ItemGroup Condition=" '$(Configuration)' != 'Release' ">
+      <TargetVersionNumber Include="$([System.String]::Format('$(VersionNumber)-build{0:000}', $([MSBuild]::Add($(RevisionNumber), 0))))" />
+    </ItemGroup>
+    <Message Text="Discovered assembly version: @(TargetVersionNumber)" Importance="High" />
+    <Exec Command="&quot;$(SolutionDir).nuget\NuGet.exe&quot; pack &quot;$(SolutionDir)Ninject.Extensions.UnitOfWork.nuspec&quot; -Version @(TargetVersionNumber) -OutputDirectory &quot;$(SolutionDir)Releases&quot; -Properties assemblydir=$(TargetDir) -Verbosity detailed" ConsoleToMsBuild="true">
+    </Exec>
+  </Target>
+</Project>

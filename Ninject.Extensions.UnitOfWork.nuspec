@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Ninject.Extensions.UnitOfWork</id>
+    <version>$version$</version>
+    <title>Ninject.Extensions.UnitOfWork</title>
+    <authors>MoonStorm</authors>
+    <owners>MoonStorm</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/MoonStorm/Ninject.Extensions.UnitOfWork</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/MoonStorm/Ninject.Extensions.UnitOfWork/master/logo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Extension for unit-of-work pattern for non-web applications.</summary>
+    <description>
+Extension for unit-of-work pattern for non-web applications.
+Setup:
+    _kernel.Bind&lt;IService&gt;().To&lt;Service&gt;().InUnitOfWorkScope();
+Usage:
+    using(UnitOfWorkScope.Create()){
+        // resolves, async/await, manual TPL ops, etc    
+    }
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Ninject extension unit-of-work uow</tags>
+    <frameworkAssemblies>
+    </frameworkAssemblies>
+    <dependencies>
+      <group>
+        <dependency id="Ninject" version="3.2.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="$assemblydir$Ninject.Extensions.UnitOfWork.dll" target="lib\net45" />
+  </files>
+</package>
