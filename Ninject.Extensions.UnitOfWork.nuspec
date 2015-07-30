@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Extension for unit-of-work pattern for non-web applications.</summary>
     <description>
-Extension for unit-of-work pattern for non-web applications.
+Extension for unit-of-work pattern for non-web applications. The scopes are kept consistent across async calls and tasks.
 Setup:
     _kernel.Bind&lt;IService&gt;().To&lt;Service&gt;().InUnitOfWorkScope();
 Usage:
