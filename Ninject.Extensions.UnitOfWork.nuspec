@@ -10,11 +10,15 @@
     <projectUrl>https://github.com/MoonStorm/Ninject.Extensions.UnitOfWork</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/MoonStorm/Ninject.Extensions.UnitOfWork/master/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Extension for unit-of-work pattern for non-web applications.</summary>
+    <summary>Extension for unit-of-work pattern in non-web applications.</summary>
     <description>
-Extension for unit-of-work pattern for non-web applications. The scopes are kept consistent across async calls and tasks.
+Extension that enables the usage of unit-of-work patterns in non-web applications. 
+You could look at this as being the equivalent of InRequestScope from web environments in console applications and services.
+The unit-of-work scopes are kept consistent across async calls and tasks.
+
 Setup:
     _kernel.Bind&lt;IService&gt;().To&lt;Service&gt;().InUnitOfWorkScope();
+    
 Usage:
     using(UnitOfWorkScope.Create()){
         // resolves, async/await, manual TPL ops, etc    
@@ -23,7 +27,7 @@ Usage:
     <releaseNotes>
     </releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>Ninject extension unit-of-work uow</tags>
+    <tags>Ninject extension ioc di unit-of-work InRequestScope application service</tags>
     <frameworkAssemblies>
     </frameworkAssemblies>
     <dependencies>
@@ -34,5 +38,6 @@ Usage:
   </metadata>
   <files>
     <file src="$assemblydir$Ninject.Extensions.UnitOfWork.dll" target="lib\net45" />
+    <file src="$assemblydir$Ninject.Extensions.UnitOfWork.xml" target="lib\net45" />
   </files>
 </package>

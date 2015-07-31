@@ -1,5 +1,6 @@
-Extension for unit-of-work pattern for non-web applications.
-The scopes are kept consistent across async calls and tasks.
+Extension that enables the usage of unit-of-work patterns in non-web applications. 
+You could look at this as being the equivalent of InRequestScope from web environments in console applications and services.
+The unit-of-work scopes are kept consistent across async calls and tasks.
 
 #### Setup:
     _kernel.Bind<IService>().To<Service>().InUnitOfWorkScope();

@@ -9,11 +9,10 @@
     public static class UnitOfWorkExtensionMethods
     {
         /// <summary>
-        /// 
+        /// Sets up the behavior of a binding for one instance per unit of work. 
+        /// A unit of work must be available at the time the binding is used for resolve. 
+        /// Use <see cref="UnitOfWorkScope.Create"/> to create a scope of type unit of work and remember to dispose it when you're done with it.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="syntax"></param>
-        /// <returns></returns>
         public static IBindingNamedWithOrOnSyntax<T> InUnitOfWorkScope<T>(this IBindingInSyntax<T> syntax)
         {
             return syntax.InScope(
