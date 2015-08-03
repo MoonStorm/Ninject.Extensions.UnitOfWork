@@ -10,3 +10,5 @@ The unit-of-work scopes are kept consistent across async calls and tasks.
         // resolves, async/await, manual TPL ops, etc    
     }
 
+**[Download from NuGet and enjoy!](https://www.nuget.org/packages/Ninject.Extensions.UnitOfWork/)**
+
