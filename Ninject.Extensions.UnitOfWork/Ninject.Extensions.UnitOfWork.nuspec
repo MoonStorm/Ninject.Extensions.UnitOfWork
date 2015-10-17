@@ -37,7 +37,7 @@ Usage:
     </dependencies>
   </metadata>
   <files>
-    <file src="$assemblydir$Ninject.Extensions.UnitOfWork.dll" target="lib\net45" />
-    <file src="$assemblydir$Ninject.Extensions.UnitOfWork.xml" target="lib\net45" />
+    <file src="bin\$configuration$\Ninject.Extensions.UnitOfWork.dll" target="lib\net45" />
+    <file src="bin\$configuration$\Ninject.Extensions.UnitOfWork.xml" target="lib\net45" />
   </files>
 </package>
